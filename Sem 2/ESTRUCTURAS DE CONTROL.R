@@ -2,7 +2,7 @@
 ########## PROGRAMACION EN LENGUAJE ESTADISTICO
 ########## FACULTAD DE CIENCIAS MATEMATICA
 ########## ESCUELA DE ESTADISTICA
-########## TEMA: ESTRUCTURAS DE CONTROL
+########## TEMA: ESTRUCTURAS DE CONTROL - SEMANA 2
 #############################################################################
 
 ##II.	Estructuras de control condicionales
@@ -13,6 +13,8 @@ edad <- 18
 if (edad >= 18){
   cat("Edad =", edad,"años: puede votar")
 }
+
+
 
 #2.2.	Estructuras condicionales dobles
 #Programa: "Analizar edad para votar
@@ -34,6 +36,8 @@ if (edad < 18){
   cat("Edad =", edad,"años: puede votar obligatoriamente")
 }
 
+
+
 ##III.	Estructuras de control iterativas
 
 #3.1.	Estructuras de control iterativas con un número fijo de iteraciones
@@ -46,12 +50,13 @@ for (i in 1:5) {
 }
 cat(x, "elevado a la quinta es igual a", resultado)
 
+
+
 #Programa: Calcular x elevado al valor i
 x <- 4
 for (i in 1:5) {
   resultado <- x ** i
 }
-cat(x, "elevado al valor i", resultado)
 cat(x, "elevado al valor", i, "=", resultado, "\n")
 
 
@@ -69,8 +74,8 @@ for (i in 0:10) {
 
 x <- 100
 while (x >= 0.01) {
-  x <- x/2
   cat(x, "\n")
+  x <- x/2
 }
 
 #ii.	Hasta que
@@ -86,9 +91,9 @@ repeat {
 
 var <- 9
 while (var < 10) {
-  var <- var - 1
   cat("var =", var, "No puedo parar!!!", "\n")
   if (var == -3) break
+  var <- var - 1
 }
 
 #Ejem 1

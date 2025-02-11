@@ -15,20 +15,28 @@
 #acción de asignación
 #Por ejemplo, la siguiente secuencia de acciones en un algoritmo:
 var1 <- 2
-var2 <- var1
+var2 <- var1  # 2
 var1 <- 7
 var3 <- var1
 
 var2 + var3
 
-#Un caso particular se da cuando a una variable se le asigna el valor de una
+#Un caso particular se da cuando a una variable se le asigna el 
+#valor de una
 #operación de la que forma parte la misma variable. 
-#Por ejemplo:
+# Por ejemplo:
 stock.inicial <- 43
 ventas <- 29
 compras <- 12
 stock.final <- stock.inicial - ventas + compras
 stock.final
+
+
+
+
+
+
+
 
 # Creación y manejo de objetos en R
 ###################################
@@ -40,47 +48,52 @@ stock.final
 lugar_nacimiento <- "Bombal"
 peso_nacimiento <- 3.423
 
-#Registra tu nombre y tu edad
 
-#Las funciones también tienen un nombre (identificador) y están seguidas por 
-#un par de paréntesis, dentro de los cuales se escriben opciones para que 
-#ellas operen. 
-#La función class() es la que nos dice qué tipo de dato hay en una variable:
+
+
+
+#Las FUNCIONES 
+ 
 var1 <- 2
 var2 <- "Hola Mundo"
 var3 <- TRUE
+
 class(var1)
 class(var2)
 class(var3)
 
-#También hay algunas funciones que devuelven TRUE o FALSE a modo de respuesta
-#cuando le preguntamos a R si una variable tiene un dato de tipo numérico, 
-#caracter o lógico:
 is.numeric(var1)
-is.numeric(var2)
-is.character(var3)
+is.character(var2)
 is.logical(var3)
 
-#También podemos ver en la consola un listado de todos los nombres de los
-#objetos que existen en el ambiente con la función ls(), por ejemplo:
+#Listado de todos los nombres de los objetos que existen en el ambiente:
 ls()
 
 #Si queremos eliminar sólo un objeto debemos ejecutar la función rm(), 
-#indicando entre paréntesis el identificador del objeto que deseamos borrar,
-#por ejemplo:
 rm(var1)
+
+
+
+
+
+
+
 
 #Ejercicios
 
 #Ejemplo 1: Clase de un número
 #Crea un objeto llamado mi_numero que contenga el valor 25.5. 
 #Usa la función class() para determinar a qué clase pertenece este objeto.
+mi_numero <- 25.5
+class(mi_numero)
 
 #Ejemplo 2: Clase de un texto
 #Asigna la frase "Programación en Lenguaje Estadístico"
 #a un objeto llamado mi_texto. 
 #Verifica su clase utilizando la función class().
 
+mi_texto <- "Programación en Lenguaje Estadístico"
+class(mi_texto)
 
 #Si nos interesa guardar de forma permanente en la computadora una copia 
 #de todo lo que se encuentra en el ambiente en un archivo dentro de alguna
@@ -90,6 +103,9 @@ rm(var1)
 #o usando la función save.image()
 
 save.image("C:/Users/NATHALLY/Documents/PLE/SEMANA 2/PRACTICA R/objetos.RData")
+#Es una forma práctica de guardar tu trabajo para recuperarlo después sin tener 
+#que ejecutar nuevamente el código que generó esos objetos.
+
 
 #Si por el contrario necesitamos importar al ambiente objetos que estén 
 #guardados en algún lugar de nuestra compu en un archivo .RData
@@ -112,14 +128,18 @@ x ** y    #Potenciación
 x %/% y	  #División entera
 x %% y    #División módular
 7/3
+
+
+
 #Veamos algunos ejemplos:
 4 + 2 * 4
 23 * 2 / 5
 3 + 5 * (10 - (2 + 4))
 2.1 * 1.5 + 12.3
 2.1 * (1.5 + 12.3)
-1 %% 4
+1 %% 4 #1
 4 %% 1
+
 8 * (7 - 6 + 5) %% (1 + 8 / 2) - 1
 
 #Operadores relacionales o de comparación
@@ -127,6 +147,7 @@ x %% y    #División módular
 
 x <- 7
 y <- 3
+
 x > y
 x < y
 x >= y
@@ -169,6 +190,8 @@ carrera <- "Estadística"
 carrera <- "Administración"
 !(carrera == "Estadística")
 
+
+
 #Verificar que el valor guardado en x no sea igual a 2 ni a 3:
 
 #Opción correcta 1: (x != 2) Y (x != 3)
@@ -190,8 +213,7 @@ x <- 3
 !(x == 2 || x == 3)
 
 #Opción incorrecta: (x != 2) O (x != 3)
-# Da verdadero, porque al ser x igual a 3, es distinto de 2,
-# haciendo que la primera parte sea verdadera 
+
 x <- 3
 x != 2 || x != 3
 
@@ -199,6 +221,8 @@ x != 2 || x != 3
 
 #1. Crea un objeto llamado temperatura con el valor 22.5 y verifica si 
 #está entre 20 y 25 grados (inclusive)
+temperatura <- 22.5
+temperatura > 20 && temperatura <25
 
 #2.Crea un objeto llamado fruta con el valor "Manzana" y evalúa si 
 #pertenece al conjunto de frutas "Manzana" o "Plátano"
@@ -211,11 +235,11 @@ fruta <- "Manzana"
 (fruta == "Manzana") || (fruta == "Plátano")
 
 ###Leyes de Morgan
-#NO (b O c) es equivalente a NO b Y NO c.
-#NO (b Y c) es equivalente a NO b O NO c.
+#NO (b O c) es equivalente a: NO b Y NO c.
+#NO (b Y c) es equivalente a: NO b O NO c.
 
 ancho <- 6.4
-(ancho > 5) && (ancho < 7)
+!(ancho > 5) && !(ancho < 7)
 
 ancho > 5 && ancho < 7
 
@@ -249,6 +273,12 @@ y <- 2
 # error
 (x > y) || (x > z)
 
+
+
+
+
+
+
 #Entrada y salida de información
 ################################
 
@@ -260,7 +290,10 @@ radio <- 5
 area <- pi * radio^2
 cat("El área del círculo es", area, "m^2")
 
-# Calcule el perímetro de un rectángulo
+
+
+
+
 
 #Directorio de trabajo
 #En primer lugar, generar un archivo llamado objetos.RData con todos los 
@@ -269,9 +302,7 @@ cat("El área del círculo es", area, "m^2")
 save.image("C:/Users/NATHALLY/Documents/PLE/SEMANA 2/PRACTICA R/objetos.RData")
 load("C:/Users/NATHALLY/Documents/PLE/SEMANA 2/PRACTICA R/objetos.RData")
 
-#Por ejemplo, en este momento y en mi computadora, R está posando su atención
-#en una carpeta que se llama introprog y cuya ruta puedo descubrir con la 
-#función getwd(), que significa “obtener (get) el directorio de trabajo (wd)”:
+#Por ejemplo, en este momento R está posando su atención
 getwd()
 
 #Esto quiere decir que R puede ver y acceder de manera directa a todos los 
@@ -287,9 +318,7 @@ save.image("objetos1.RData")
 #(carpeta introprog) y no en la carpeta Facultad. Del mismo modo, si ejecuto:
 load("objetos1.RData")
 
-#Podemos cambiar el directorio de trabajo por cualquier otra carpeta en la 
-#que queramos estar trabajando con la función setwd() 
-#(“setear el working directory”):
+#Podemos cambiar el directorio de trabajo con la función setwd() 
 setwd("C:/Users/NATHALLY/Documents/PLE/SEMANA 2/OBJETO")
 getwd()
 

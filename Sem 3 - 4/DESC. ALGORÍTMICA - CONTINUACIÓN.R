@@ -6,14 +6,6 @@
 #############################################################################
 
 ###NULL vs NA vs NaN
-
-g <- function(x, y) {
-  resultado <- x^2 + 3 * y
-  cat("El resultado de esta cuenta es:", resultado, "\n")
-  return(NULL)
-}
-g(4, 5)
-
 a <- NULL
 b <- NA
 d <- NaN
@@ -30,14 +22,19 @@ class(f)
 
 g1 <- function(x, y) {
   resultado <- x^2 + 3 * y
-  return(resultado)
+  return(resultado) #ojo con el return
 }
 g1(4, 5)
+a <- g1(4, 5)
+a
 
 g2 <- function(x, y) {
   x^2 + 3 * y
 }
 g2(4, 5)
+b <- g2(4, 5)
+b
+
 
 g3 <- function(x, y) {
   resultado <- x^2 + 3 * y
@@ -45,18 +42,16 @@ g3 <- function(x, y) {
   return(NULL)
 }
 g3(4, 5)
+x <- g3(4, 5)
+x #BOTA NULL
 
 g4 <- function(x, y) {
   resultado <- x^2 + 3 * y
   cat("El resultado de esta cuenta es:", resultado)
 }
 g4(4, 5)
-
-x <- g3(4, 5)
-x
-
 y <- g4(4, 5)
-y
+y #BOTA NULL debido al return
 
 ##Documentación de los subalgoritmos
 
@@ -107,8 +102,20 @@ fun <- function(x, y) {
 # ---------------------------------------------------------------
 a <- 3
 b <- 5
-d <- fun(a, b)
-cat(a, b, d)
+d <- fun(a, b) #14
+cat(a, b, d) #3 5 14
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Ámbito de las variables
@@ -208,6 +215,8 @@ nueva_f()
 
 nueva_f(y = 5)
 
+
+
 ###Otros tópicos de lectura opcional
 
 ##Modificar una variable global desde el cuerpo de una función en R
@@ -231,14 +240,14 @@ g2 <- function(x) {
 # Caso 1: el valor de y en el ambiente global no es modificado por g1
 x <- 500
 y <- 50
-z <- g1(x)
-cat(x, y, z)
+z <- g1(x) #500/150
+cat(x, y, z) #500 50 3.333
 
 # Caso 2: el valor de y en el ambiente global es modificado por g2
 x <- 500
 y <- 50
-z <- g2(x)
-cat(x, y, z)
+z <- g2(x) #500/150
+cat(x, y, z) #500 150 3.333
 
 
 

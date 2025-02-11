@@ -2,7 +2,7 @@
 ########## PROGRAMACION EN LENGUAJE ESTADISTICO
 ########## FACULTAD DE CIENCIAS MATEMATICA
 ########## ESCUELA DE ESTADISTICA
-########## TEMA: DESCOMPOSICIÓN ALGORÍTMICA
+########## TEMA: DESCOMPOSICIÓN ALGORÍTMICA SEMANA 3-4
 #############################################################################
 
 #Funciones predefinidas de R
@@ -26,6 +26,7 @@ log(x)
 log(100,10)
 
 # En Estadística:
+
 #Datos de edad:
 edad <- c(22,21,21,21,25)
 mean(edad)   #Media aritmética
@@ -53,11 +54,6 @@ dbinom(3,10,0.54)
 #P(X <= 3)
 pbinom(3,10,0.54,lower.tail = TRUE)
 
-#Otro ejemplo
-x <- 100
-y <- x/2
-z <- 4
-log(x - y, z)  #z representa base 4
 
 
 #Definición de nuevas funciones en R
