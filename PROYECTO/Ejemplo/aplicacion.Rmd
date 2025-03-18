@@ -1,0 +1,387 @@
+---
+title: "APLICACION"
+author: "Kelva Llanos"
+date: "2025-02-27"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show
+---
+
+# BASE DE DATOS: MUNDIALES
+
+Para ejemplificar, trabajaremos con un archivo llamado mundiales.txt que tiene datos sobre todos los mundiales de fútbol de la FIFA, incluyendo el del año 2022, en el cual nuestra selección argentina conquistó su tercer título. Cada fila del conjunto de datos corresponde a un país y cada columna hace referencia a las siguientes variables:
+
+-seleccion: Nombre del país, tipo character
+
+-continente: Continente al que pertenece el país, tipo character
+
+-participaciones: cantidad de mundiales jugados, tipo numeric
+
+-pg: cantidad de partidos ganados, tipo numeric
+
+-pe: cantidad de partidos empatados, tipo numeric
+
+-pp: cantidad de partidos perdidos, tipo numeric
+
+-gf: cantidad de goles a favor, tipo numeric
+
+-gc: cantidad de goles en contra, tipo numeric
+
+-titulo: cantidad de mundiales ganadados, tipo numeric
+
+Este archivo tiene 80 registros, ya que son 80 países los que han disputado algún mundial a lo largo de la historia. Los primeros registros lucen así:
+
+```{r}
+library(tidyverse)
+datos <- read_delim("C:/Users/NATHALLY/Documents/PLE/datos/mundiales.csv",delim=",")
+datos
+```
+
+## **Estructura de datos**
+
+```{r}
+#Muestra la estructura interna del dataset
+str(datos)
+```
+
+### **Creación y Renombre de variables**
+
+Vamos a calcular la cantitad total de partidos que cada selección ha jugado en los mundiales a lo largo de toda la historia (pj), sumando la cantidad de partidos que ha ganado, empatado y perdido:
+
+```{r}
+datos <- mutate(datos, pj = pg + pe + pp)
+head(datos)
+```
+
+Vamos a crear una nueva columna que se llame campeon y tenga el valor “campeón” cuando titulos \> 0 y “no campeón” en caso contrario.
+
+```{r}
+datos <- mutate(datos, campeon = ifelse(titulos > 0, "campeón", "no campeón"))
+head(datos)
+```
+
+Crear una nueva variable llamada puntos que indique cuál es el puntaje total obtenido por cada selección a lo largo del tiempo, teniendo en cuenta que cada partido ganado aporta 3 puntos, cada partido empatado aporta 1 punto y cada partido perdido aporta 0 puntos, y otra nueva variable llamada dg, diferencia de goles, definida como la resta entre los goles a favor y los goles en contra. Además, renombrar la variable (atributo) gf por goles_favor y gc por goles_contra
+
+```{r}
+datos <- 
+  datos %>% 
+  mutate(
+        puntos = 3 * pg + pe, 
+    dg = gf - gc
+  ) %>% 
+  rename(goles_favor = gf, goles_contra = gc) 
+
+head(datos)
+```
+
+### **Recodificación de categorías**
+
+Aquellos registros con “Ocean\xeda”, "\xc1frica" y "Am\xe9rica" en continente son reemplazados por “Oceanía”, "África" y "América" respectivamente. Los otros valores quedan como estaban:
+
+```{r}
+datos <- mutate(
+  datos, 
+  continente = case_when(
+    continente == "Ocean\xeda" ~ "Oceanía",
+    continente == "\xc1frica" ~ "África",
+    continente == "Am\xe9rica" ~ "América",
+    TRUE ~ continente # opción por defecto
+  )
+)
+
+head(datos)
+```
+
+# ORGANIZACIÓN DE DATOS: Tablas de frecuencias y Gráficos Estadísticos
+
+## **Tablas de frecuencias y Gráficos Estadísticos para variables cualitativas**
+
+**Tabla de frecuencias**
+
+```{r}
+frecuencias <- datos %>%
+  group_by(continente) %>%
+  summarise(Frecuencia = n()) %>%
+  mutate(Frecuencia_Relativa = Frecuencia / sum(Frecuencia),
+         Frecuencia_Porcentual = Frecuencia_Relativa * 100)
+
+frecuencias
+```
+
+**Gráficos de Barras y Sector Circular**
+
+```{r}
+# **Gráfico de barras**
+grafico_barras <- ggplot(frecuencias, aes(x = continente, y = Frecuencia, fill = continente)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(title = "Distribución de Selecciones por Continente", x = "Continente", y = "Cantidad de Selecciones")
+# Mostrar gráfico de barras
+print(grafico_barras)
+
+# **Gráfico de sectores (pastel)**
+
+grafico_pie <- ggplot(frecuencias, aes(x = "", y = Frecuencia, fill = continente)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar(theta = "y") +
+  theme_void() +
+  labs(title = "Proporción de Selecciones por Continente")
+# Mostrar gráfico de sectores
+print(grafico_pie)
+```
+
+## **Tablas de frecuencias y Gráficos Estadísticos para variable cuantitativa discreta**
+
+**Tabla de frecuencias**
+
+```{r}
+frecuencias <- datos %>%
+  group_by(participaciones) %>%
+  summarise(Frecuencia = n()) %>%
+  mutate(Frecuencia_Relativa = Frecuencia / sum(Frecuencia),
+         Frecuencia_Porcentual = Frecuencia_Relativa * 100) %>%
+  arrange(desc(Frecuencia)) %>%  # Ordenar de mayor a menor frecuencia
+  mutate(Frecuencia_Acumulada = cumsum(Frecuencia),
+         Frecuencia_Relativa_Acumulada = cumsum(Frecuencia_Relativa),
+         Frecuencia_Porcentual_Acumulada = cumsum(Frecuencia_Porcentual))
+
+# Mostrar la tabla de frecuencias con acumuladas
+print(frecuencias)
+```
+
+**Gráfico de líneas o bastones**
+
+```{r}
+# Crear el gráfico de listones
+ggplot(frecuencias, aes(x = reorder(participaciones, Frecuencia), y = Frecuencia, fill = participaciones)) +
+  geom_col() + 
+  coord_flip() +  # Gira el gráfico para que sea horizontal (listones)
+  labs(title = "Distribución de participaciones",
+       x = "Participaciones",
+       y = "Frecuencia") +
+  theme_minimal() +
+  theme(legend.position = "none") +  # Oculta la leyenda si no es necesaria
+  geom_text(aes(label = Frecuencia), hjust = -0.2, color = "black")
+```
+
+## **Tablas de frecuencias y Gráficos Estadísticos para variable cuantitativa continua**
+
+**Cálculo del rango, número de intervalos y amplitud**
+
+```{r}
+rango <- max(datos$goles_favor)-min(datos$goles_favor)
+k <- round(1 + 3.3*log10(80),0)  ##Regla de Sturges
+A <- ceiling(rango/k)   ##Amplitud redondeada hacia el entero superior
+cbind(rango,k,A)
+```
+
+Creación de la variable Goles a favor por intervalos (k = 7 intervalos) con una amplitud igual a 19, la cual se llamará gf_intervalos
+
+```{r}
+datos <- mutate(datos, gf_intervalos = cut(goles_favor, breaks = seq(0, 126, 19), right = FALSE))
+head(datos)
+```
+
+**Tabla de frecuencias**
+
+```{r}
+frecuencias <- datos %>%
+  group_by(gf_intervalos) %>%
+  summarise(Frecuencia = n()) %>%
+  mutate(Frecuencia_Relativa = Frecuencia / sum(Frecuencia),
+         Frecuencia_Porcentual = Frecuencia_Relativa * 100,
+         Frecuencia_Relativa_Acumulada = cumsum(Frecuencia_Relativa),
+         Frecuencia_Porcentual_Acumulada = cumsum(Frecuencia_Porcentual))
+
+frecuencias
+```
+
+**Histograma**
+
+```{r}
+# **Histograma de la variable "goles_favor"**
+histograma_goles <- ggplot(datos, aes(x = goles_favor)) +
+  geom_histogram(binwidth = 19, fill = "steelblue", color = "black", alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Distribución de Goles a Favor", x = "Goles a Favor", y = "Frecuencia")
+
+# Mostrar histograma
+print(histograma_goles)
+```
+
+### **Tabla de Contingencia**
+
+```{r}
+##Distribución conjunta de las variables
+
+library(janitor)
+
+datos %>% 
+  tabyl(continente, campeon) %>% 
+  adorn_totals(where = c("row", "col")) %>% 
+  adorn_percentages(denominator = "all") #%>%  # cálculo de proporciones
+  #adorn_pct_formatting(digits = 1)            # mostrarlas como porcentaje (opcional)
+  
+  datos %>% 
+  tabyl(continente, campeon) %>% 
+  adorn_totals(where = c("row", "col")) %>% 
+  adorn_percentages(denominator = "all") %>% 
+  adorn_pct_formatting(digits = 1) %>% 
+  adorn_ns() %>% 
+  adorn_title(placement = "top", "Continente", "Campeones del mundo")
+```
+
+# **MEDIDAS DE TENDENCIA CENTRAL, DISPERSIÓN, POSICIÓN, ASIMETRÍA Y CURTOSIS**
+
+## **Medidas de resumen para una variable cuantitativa**
+
+```{r}
+##Para la variable puntos
+
+# Cargar librerías necesarias
+library(dplyr)
+library(moments)  # Para calcular asimetría y curtosis
+
+# Calcular medidas de tendencia central para una variable ("puntos")
+resumen1 <- datos %>%
+  summarise(
+    media = mean(puntos),                   # Media aritmética
+    mediana = median(puntos),               # Mediana
+    moda = as.numeric(names(sort(table(puntos), decreasing = TRUE)[1])),  # Moda
+  )
+# Mostrar resultados
+print(resumen1)
+
+# Calcular medidas de variabilidad para una variable ("puntos")
+
+resumen2 <- datos %>%
+  summarise(
+    media = mean(puntos),                   # Media aritmética
+    minimo = min(puntos),                   # Valor mínimo
+    maximo = max(puntos),                   # Valor máximo
+    rango = maximo - minimo,                # Rango
+    varianza = var(puntos),                 # Varianza
+    desviacion_estandar = sd(puntos),       # Desviación estándar
+    coef_variacion = (desviacion_estandar / media) * 100,  # Coeficiente de variación
+  )
+# Mostrar resultados
+print(resumen2)
+
+# Calcular el coeficiente de asimetría y curtosis para una variable ("puntos")
+
+resumen3 <- datos %>%
+  summarise(
+    asimetria = skewness(puntos),           # Coeficiente de asimetría
+    curtosis = kurtosis(puntos),            # Curtosis
+    n = n()                                 # Número de registros
+  )
+# Mostrar resultados
+print(resumen3)
+
+
+# Calcular las medidas de posiciones (cuantiles: cuartiles y percentiles) para 
+# una variable ("puntos")
+
+library(dplyr)
+
+# Calcular cuartiles y percentiles
+resumen4 <- datos %>%
+  summarise(
+    Q1 = quantile(puntos, 0.25),  # Primer cuartil (25%)
+    Q2 = quantile(puntos, 0.50),  # Segundo cuartil (Mediana, 50%)
+    Q3 = quantile(puntos, 0.75),  # Tercer cuartil (75%)
+    P10 = quantile(puntos, 0.10), # Percentil 10
+    P35 = quantile(puntos, 0.35),  # Percentil 35
+    P68 = quantile(puntos, 0.68),  # Percentil 68
+    P90 = quantile(puntos, 0.90)  # Percentil 90
+  )
+# Mostrar resultados
+print(resumen4)
+```
+
+## **Medidas de resumen de una variable cuantitativa agrupada por una cualitativa**
+
+```{r}
+##Para la variable cuantitativa puntos y para la variable cualitativa continente
+
+# Cargar librerías necesarias
+library(dplyr)
+library(moments)  # Para calcular asimetría y curtosis
+
+# Calcular medidas de tendencia central para una variable ("puntos")
+datos %>%
+  group_by(continente) %>%
+  summarise(
+    media = mean(puntos),                   # Media aritmética
+    mediana = median(puntos),               # Mediana
+    moda = as.numeric(names(sort(table(puntos), decreasing = TRUE)[1])),  # Moda
+)
+
+
+# Calcular medidas de variabilidad para una variable ("puntos")
+
+datos %>%
+  group_by(continente) %>%
+  summarise(
+    media = mean(puntos),                   # Media aritmética
+    minimo = min(puntos),                   # Valor mínimo
+    maximo = max(puntos),                   # Valor máximo
+    rango = maximo - minimo,                # Rango
+    varianza = var(puntos),                 # Varianza
+    desviacion_estandar = sd(puntos),       # Desviación estándar
+    coef_variacion = (desviacion_estandar / media) * 100,  # Coeficiente de variación
+)
+
+
+# Calcular el coeficiente de asimetría y curtosis para una variable ("puntos")
+
+datos %>%
+  group_by(continente) %>%
+  summarise(
+    asimetria = skewness(puntos),           # Coeficiente de asimetría
+    curtosis = kurtosis(puntos),            # Curtosis
+    n = n()                                 # Número de registros
+)
+
+# Calcular las medidas de posiciones (cuantiles: cuartiles y percentiles) para 
+# una variable ("puntos")
+
+library(dplyr)
+
+# Calcular cuartiles y percentiles
+datos %>%
+  group_by(continente) %>%
+  summarise(
+    Q1 = quantile(puntos, 0.25),  # Primer cuartil (25%)
+    Q2 = quantile(puntos, 0.50),  # Segundo cuartil (Mediana, 50%)
+    Q3 = quantile(puntos, 0.75),  # Tercer cuartil (75%)
+    P10 = quantile(puntos, 0.10), # Percentil 10
+    P35 = quantile(puntos, 0.35),  # Percentil 35
+    P68 = quantile(puntos, 0.68),  # Percentil 68
+    P90 = quantile(puntos, 0.90)  # Percentil 90
+)
+```
+
+### **Diagrama de cajas de una variable cuantitativa agrupada por una cualitativa**
+
+```{r}
+# Cargar librerías necesarias
+library(ggplot2)
+
+# Crear el diagrama de cajas agrupado
+ggplot(datos, aes(x = continente, y = puntos, fill = continente)) +
+  geom_boxplot() +
+  labs(title = "Diagrama de Cajas de Puntos por Continente",
+       x = "Continente",
+       y = "Puntos") +
+  theme_minimal() +
+  theme(legend.position = "none")  # Oculta la leyenda, ya que los colores son por continente
+```

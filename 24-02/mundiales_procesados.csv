@@ -1,0 +1,81 @@
+pais_continente,seleccion,continente,participaciones,pg,pe,pp,goles_favor,goles_contra,titulos,pj,campeon,puntos,dg
+Pais_1 - Asia,Pais_1,Asia,13,38,27,0,63,0,2,65,campeón,141,63
+Pais_2 - Oceanía,Pais_2,Oceanía,9,5,24,16,0,24,3,45,campeón,39,-24
+Pais_3 - África,Pais_3,África,15,7,24,44,16,62,1,75,campeón,45,-46
+Pais_4 - Oceanía,Pais_4,Oceanía,13,26,22,17,43,21,2,65,campeón,100,22
+Pais_5 - Oceanía,Pais_5,Oceanía,1,0,2,3,0,9,4,5,campeón,2,-9
+Pais_6 - Europa,Pais_6,Europa,7,4,9,22,11,57,5,35,campeón,21,-46
+Pais_7 - África,Pais_7,África,9,32,2,11,29,21,0,45,no campeón,98,8
+Pais_8 - África,Pais_8,África,1,2,2,1,4,0,4,5,campeón,8,4
+Pais_9 - África,Pais_9,África,12,41,15,4,45,3,5,60,campeón,138,42
+Pais_10 - Oceanía,Pais_10,Oceanía,8,11,15,14,5,41,3,40,campeón,48,-36
+Pais_11 - Asia,Pais_11,Asia,11,23,1,31,36,69,4,55,campeón,70,-33
+Pais_12 - África,Pais_12,África,19,58,0,37,23,14,0,95,no campeón,174,9
+Pais_13 - Oceanía,Pais_13,Oceanía,17,31,47,7,92,21,5,85,campeón,140,71
+Pais_14 - Europa,Pais_14,Europa,8,31,11,0,45,0,5,42,campeón,104,45
+Pais_15 - Asia,Pais_15,Asia,3,7,4,4,20,10,5,15,campeón,25,10
+Pais_16 - Europa,Pais_16,Europa,3,8,4,3,2,4,3,15,campeón,28,-2
+Pais_17 - Asia,Pais_17,Asia,1,3,2,0,0,0,4,5,campeón,11,0
+Pais_18 - Oceanía,Pais_18,Oceanía,5,16,6,3,20,0,3,25,campeón,54,20
+Pais_19 - América,Pais_19,América,10,11,8,31,31,7,1,50,campeón,41,24
+Pais_20 - Asia,Pais_20,Asia,7,6,8,21,0,52,1,35,campeón,26,-52
+Pais_21 - Europa,Pais_21,Europa,9,1,2,42,3,59,4,45,campeón,5,-56
+Pais_22 - Oceanía,Pais_22,Oceanía,7,2,18,15,2,43,3,35,campeón,24,-41
+Pais_23 - Asia,Pais_23,Asia,9,16,15,14,17,4,0,45,no campeón,63,13
+Pais_24 - América,Pais_24,América,8,26,15,0,24,0,5,41,campeón,93,24
+Pais_25 - América,Pais_25,América,12,1,2,57,1,102,5,60,campeón,5,-101
+Pais_26 - África,Pais_26,África,2,1,3,6,2,3,4,10,campeón,6,-1
+Pais_27 - África,Pais_27,África,1,3,1,1,5,1,1,5,campeón,10,4
+Pais_28 - Europa,Pais_28,Europa,16,53,32,0,57,0,1,85,campeón,191,57
+Pais_29 - Asia,Pais_29,Asia,5,4,7,14,2,31,5,25,campeón,19,-29
+Pais_30 - Asia,Pais_30,Asia,3,0,3,12,0,29,4,15,campeón,3,-29
+Pais_31 - África,Pais_31,África,12,0,10,50,0,46,3,60,campeón,10,-46
+Pais_32 - Asia,Pais_32,Asia,8,18,16,6,39,2,1,40,campeón,70,37
+Pais_33 - Asia,Pais_33,Asia,22,1,35,74,1,54,3,110,campeón,38,-53
+Pais_34 - América,Pais_34,América,3,4,5,6,7,7,1,15,campeón,17,0
+Pais_35 - África,Pais_35,África,1,3,1,1,1,3,1,5,campeón,10,-2
+Pais_36 - Oceanía,Pais_36,Oceanía,3,9,2,4,14,12,2,15,campeón,29,2
+Pais_37 - África,Pais_37,África,5,5,13,7,5,17,1,25,campeón,28,-12
+Pais_38 - Oceanía,Pais_38,Oceanía,15,31,24,20,22,59,0,75,no campeón,117,-37
+Pais_39 - América,Pais_39,América,14,54,34,0,126,0,4,88,campeón,196,126
+Pais_40 - Europa,Pais_40,Europa,3,3,8,4,9,9,4,15,campeón,17,0
+Pais_41 - Asia,Pais_41,Asia,1,2,0,3,1,2,3,5,campeón,6,-1
+Pais_42 - América,Pais_42,América,5,10,1,14,25,16,1,25,campeón,31,9
+Pais_43 - Asia,Pais_43,Asia,14,55,17,0,16,0,0,72,no campeón,182,16
+Pais_44 - Europa,Pais_44,Europa,7,26,1,8,32,23,3,35,campeón,79,9
+Pais_45 - Europa,Pais_45,Europa,9,16,21,8,8,18,2,45,campeón,69,-10
+Pais_46 - América,Pais_46,América,15,37,34,4,42,11,3,75,campeón,145,31
+Pais_47 - Europa,Pais_47,Europa,15,23,15,37,47,57,3,75,campeón,84,-10
+Pais_48 - Oceanía,Pais_48,Oceanía,10,4,28,18,6,54,1,50,campeón,40,-48
+Pais_49 - Europa,Pais_49,Europa,13,51,35,0,25,0,2,86,campeón,188,25
+Pais_50 - Asia,Pais_50,Asia,19,69,32,0,98,0,3,101,campeón,239,98
+Pais_51 - Asia,Pais_51,Asia,7,21,3,11,49,25,0,35,no campeón,66,24
+Pais_52 - Asia,Pais_52,Asia,17,10,32,43,24,116,0,85,no campeón,62,-92
+Pais_53 - Asia,Pais_53,Asia,20,15,13,72,23,61,4,100,campeón,58,-38
+Pais_54 - Oceanía,Pais_54,Oceanía,4,0,4,16,0,22,2,20,campeón,4,-22
+Pais_55 - África,Pais_55,África,5,8,3,14,12,8,2,25,campeón,27,4
+Pais_56 - América,Pais_56,América,7,27,7,1,59,3,4,35,campeón,88,56
+Pais_57 - Asia,Pais_57,Asia,13,5,6,54,9,128,3,65,campeón,21,-119
+Pais_58 - Europa,Pais_58,Europa,15,15,2,58,6,57,2,75,campeón,47,-51
+Pais_59 - Asia,Pais_59,Asia,11,28,16,11,56,0,0,55,no campeón,100,56
+Pais_60 - Europa,Pais_60,Europa,4,2,0,18,3,46,0,20,no campeón,6,-43
+Pais_61 - Europa,Pais_61,Europa,13,19,11,35,44,33,1,65,campeón,68,11
+Pais_62 - Asia,Pais_62,Asia,7,27,18,0,19,0,2,45,campeón,99,19
+Pais_63 - Oceanía,Pais_63,Oceanía,19,58,21,16,64,31,3,95,campeón,195,33
+Pais_64 - Europa,Pais_64,Europa,22,35,21,54,7,125,4,110,campeón,126,-118
+Pais_65 - Europa,Pais_65,Europa,2,2,5,3,5,5,4,10,campeón,11,0
+Pais_66 - Asia,Pais_66,Asia,10,25,29,0,15,0,3,54,campeón,104,15
+Pais_67 - Europa,Pais_67,Europa,13,2,37,26,5,47,5,65,campeón,43,-42
+Pais_68 - Europa,Pais_68,Europa,21,18,37,50,11,88,1,105,campeón,91,-77
+Pais_69 - Asia,Pais_69,Asia,6,19,12,0,50,0,4,31,campeón,69,50
+Pais_70 - Asia,Pais_70,Asia,12,31,7,22,86,0,2,60,campeón,100,86
+Pais_71 - América,Pais_71,América,12,6,26,28,14,15,1,60,campeón,44,-1
+Pais_72 - Oceanía,Pais_72,Oceanía,20,51,26,23,91,60,2,100,campeón,179,31
+Pais_73 - Oceanía,Pais_73,Oceanía,11,40,20,0,97,0,0,60,no campeón,140,97
+Pais_74 - Europa,Pais_74,Europa,7,0,0,35,0,102,1,35,campeón,0,-102
+Pais_75 - Oceanía,Pais_75,Oceanía,1,3,2,0,1,0,4,5,campeón,11,1
+Pais_76 - Europa,Pais_76,Europa,1,3,0,2,6,6,1,5,campeón,9,0
+Pais_77 - América,Pais_77,América,20,38,4,58,62,68,1,100,campeón,118,-6
+Pais_78 - Asia,Pais_78,Asia,13,17,18,30,21,21,1,65,campeón,69,0
+Pais_79 - Asia,Pais_79,Asia,9,0,3,42,0,92,5,45,campeón,3,-92
+Pais_80 - Asia,Pais_80,Asia,3,10,2,3,18,6,1,15,campeón,32,12

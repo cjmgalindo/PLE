@@ -1,0 +1,66 @@
+---
+title: "Proyecto PLE 2025"
+author: "Carlos John Michuy Galindo - Marcelo Pereyra Ruiz"
+date: "2025-03-01"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show
+---
+
+# BASE DE DATOS: COPA AMÉRICA 2024
+
+Para nuestro trabajo final, se empleará un archivo denominado "data_CA.csv", el cual recopila información detallada sobre los partidos disputados en la Copa América 2024. Cada fila de este conjunto de datos corresponde a un encuentro del torneo, mientras que las columnas abarcan diversas variables clave, como los equipos participantes, el resultado final, los goles anotados, los tiros al arco, el desempeño de los jugadores, estadísticas arbitrales y otros aspectos relacionados con el rendimiento en el juego.
+
+Las principales columnas del archivo son:
+-match_id: Codigo porpo
+
+-match_date: Fecha en la que se disputó el partido, tipo character
+
+-home_team.home_team_name: Nombre del equipo local, tipo character 
+
+-home_score: Goles anotados por el equipo local, tipo numeric
+
+-away_score: Goles anotados por el equipo visitante, tipo numeric
+
+-away_team.away_team_name: Nombre del equipo visitante, tipo character
+
+-match_week: Semana del torneo en la que se jugó el partido, tipo numeric
+
+-competition_stage.name: Fase del torneo, tipo character
+
+-stadium.name: Estadio donde se disputó el encuentro, tipo character
+
+-referee.name: Nombre del árbitro principal del partido, tipo character
+
+-referee.country.name: País de origen del árbitro, tipo character
+
+-name_home: Nombre del director técnico del equipo local, tipo character
+
+-country_home: País de origen del director técnico local, tipo character
+
+-name_away: Nombre del director técnico del equipo visitante, tipo character
+
+-country_away: País de origen del director técnico visitante, tipo character
+
+-shot_assists: Asistencias de tiro realizadas durante el partido, tipo numeric
+
+-shots: Número total de disparos realizados, tipo numeric
+
+-xg: Goles esperados, tipo numeric
+
+-goal_assists: Asistencias de gol concretadas, tipo numeric
+
+-goals: Goles anotados, tipo numeric
+
+-ownGoal: Goles en contra, tipo numeric
+
+Este archivo tiene 32 registros, ya que son 32 partidos los que se disputaron en la Copa América 2024. Los primeros registros lucen así:
+

@@ -1,0 +1,286 @@
+---
+title: "DataFrames"
+author: "Carlos John Michuy Galindo - Marcelo Pereyra Ruiz"
+date: "2025-03-04"
+output: 
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    collapsed: true
+    smooth_scroll: true
+    theme: journal
+    highlight: kate
+    df_print: paged
+    code_folding: show
+---
+
+# Librerias Usadas
+
+```{r, warning=FALSE, cache=FALSE, message=FALSE}
+library(tidyverse)
+library(StatsBombR)
+library(DT)
+
+```
+
+# FreeCompetitions()
+FreeCompetitions() nos mostrara todos los datos de las competiciones, que Statsbomb ofrece de forma gratuita, asimismo con esta podremos extraer los ID's de acceso, de la competición que queramos analizar
+
+### DataFrame FreeCompetitions
+```{r, warning=FALSE, cache=FALSE, message=FALSE}
+datatable(FreeCompetitions(), options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(FreeCompetitions()), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+```
+
+Creamos la variable "Comp", y le asignamos los datos de nuestra competicion elegida, usando el DataFrame FreeCompetitions() y filtrandolo con los datos de la la competicion elegida en nuestro caso "Copa America 2024", con la "competition_id" y el "season_name". 
+
+```{r, warning=FALSE, cache=FALSE, message=FALSE}
+Comp <- FreeCompetitions() %>%
+  filter(competition_id==223 & season_name=="2024")
+```
+
+### DataFrame Comp
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(Comp, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(Comp), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+# FreeMatches()
+FreeMatches() nos permitira recolectar los datos de todos los partidos de la "Copa America 2024", que cuenta con 32 observaciones y 42 columnas.
+
+Creamos la variable "Matches" y le asignamos los datos de los partidos de la competición seleccionada, usando la función FreeMatches() con el DataFrame Comp.
+```{r, warning=FALSE, cache=FALSE, message=FALSE}
+Matches <- FreeMatches(Comp)
+```
+
+### DataFrame Matches
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(Matches, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(Matches), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+
+# Free_allevents()
+Creamos la variable "DataEvents" y le asignamos los datos devueltos por free_allevents(), que serian los detalles de los eventos ocurridos en los partidos de la Copa América 2024, procesándolos en paralelo. Luego, limpiamos los datos usando la función allclean().
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+DataEvents <- free_allevents(MatchesDF = Matches, Parallel = T)
+DataEvents = allclean(DataEvents)
+```
+
+# "Matches" y "DataEvents"
+Hasta aqui ya tendriamos nuestros dos datasets principales uno con informacion general de cada encuentro de la Copa America 2024, y otro con informacion detallada de cada evento de la Copa America 2024
+
+### DataFrame Matches
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(Matches, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(Matches), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+### DataFrame DataEvents
+```{r,  warning=FALSE, cache=FALSE, message=FALSE, }
+datatable(
+  DataEvents[1:100, 1:50],  # Muestra solo las primeras 100 filas y 50 columnas
+  options = list(scrollX = TRUE)  # Habilita el desplazamiento horizontal si hay muchas columnas
+)
+
+```
+
+
+
+# Manipulación y análisis de dataframes
+
+## Obteniendo data de los entrenadores, de Matches
+Definimos la función `df_extraer_managers_info()` para extraer los nombres y nacionalidades de los entrenadores de los equipos locales y visitantes desde el DataFrame `Matches`. Luego, recorremos las listas de entrenadores y almacenamos la información en vectores, que finalmente se combinan en un nuevo DataFrame `df_info_entrenadores`.
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+# Extrayendo los datos de los entrenadores(lista) nombre y nacionalidad
+df_extraer_managers_info <- function(df) {
+  home_managers <- df$home_team.managers #accediendo a la columna (es lista)
+  away_managers <- df$away_team.managers
+  #vectores para almacenar los datos
+  name_away <- character(32)
+  country_away <- character(32)
+  name_home <- character(32)
+  country_home <- character(32)
+  # Recorriendo cada elemento de las listas
+  for (i in 1:32) {
+    # Extrayendo datos de away_managers
+    name_away[i] <- away_managers[[i]]$name
+    country_away[i] <- away_managers[[i]]$country.name
+    
+    # Extrayendo datos de home_managers
+    name_home[i] <- home_managers[[i]]$name
+    country_home[i] <- home_managers[[i]]$country.name
+  }
+  
+  # Dataframe con los datos extraídos
+    df_entrenadores_info <- data.frame(
+      name_home = name_home,
+      country_home = country_home,
+      name_away = name_away,
+      country_away = country_away
+    ) 
+    
+  return(df_entrenadores_info)
+}
+df_info_entrenadores <- df_extraer_managers_info(Matches)
+```
+### DataFrame df_info_entrenadores
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(df_info_entrenadores, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(df_info_entrenadores), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+
+
+Creamos el DataFrame `df_matches_sin_entrenadores` eliminando las columnas `home_team.managers` y `away_team.managers` de `Matches`, dejando solo las variables que no contienen listas.
+```{r}
+#Seleccionando las variables que no sean listas (datos de los entrenadores)
+df_matches_sin_entrenadores <- Matches %>%
+  select(-home_team.managers, -away_team.managers)
+```
+
+
+### DataFrame df_matches_sin_entrenadores
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(df_matches_sin_entrenadores, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(df_matches_sin_entrenadores), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+
+Unimos los DataFrames `df_matches_sin_entrenadores` y `df_info_entrenadores` usando `cbind()`, combinando los datos de los partidos con la información de los entrenadores en un solo DataFrame llamado `Matches`.
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+Matches <- cbind(df_matches_sin_entrenadores,df_info_entrenadores)
+```
+
+### DataFrame Matches
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(Matches, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(Matches), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+## Obteniendo data de DataEvents
+Se agrupan los datos de `DataEvents` por `match_id` (cada partido) y se calculan diversas estadísticas clave:  
+
+- **Asistencias de tiro:** cantidad de pases que resultaron en un disparo.  
+- **Tiros:** total de intentos de gol.  
+- **xG (goles esperados):** suma de los valores de expectativa de gol (`shot.statsbomb_xg`).  
+- **Asistencias de gol:** cantidad de pases que resultaron en gol.  
+- **Goles:** número total de goles anotados.  
+- **Autogoles:** cantidad de goles en propia puerta.  
+
+Esto genera un DataFrame `df_1` con 32 observaciones (una por partido).
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+#Ejemplo 
+#x match_id (por partido) total = 32 obs
+# Se consideran penales
+df_1 <- DataEvents %>%
+  group_by(match_id) %>%
+  summarise(
+    #shots assists
+    shot_assists = sum(!is.na(pass.shot_assist), na.rm = TRUE),
+    #shots
+    shots = sum(type.name=="Shot", na.rm = TRUE),
+    #xG totales
+    xg = sum(shot.statsbomb_xg, na.rm = TRUE),
+    #goal assists
+    goal_assists = sum(!is.na(pass.goal_assist), na.rm = TRUE),
+    #Goles
+    goals = sum(shot.outcome.name == "Goal", na.rm = TRUE), 
+    #autogoles
+    ownGoal = sum(type.name == "Own Goal Against", na.rm = TRUE)
+  )
+```
+### DataFrame df_1
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(df_1, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(df_1), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+Se realiza una unión por la izquierda (left_join) entre Matches y df_1 usando match_id como clave, lo que añade las estadísticas calculadas previamente (tiros, goles, xG, etc.) a los datos de los partidos.
+
+
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+data_CA <- left_join(Matches, df_1, by = "match_id")
+```
+
+### DataFrame data_CA
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(data_CA, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(data_CA), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+
+```
+
+Luego, se guarda el DataFrame resultante (data_CA) en un archivo CSV llamado "Limpiar_Data.csv", ubicado en "C:/Users/John/Downloads/", sin incluir los nombres de fila (row.names = FALSE).
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+
+write.csv(data_CA,"C:/Users/John/Downloads/Limpiar_Data.csv", row.names = FALSE)
+```
+
+### DataFrame data_CA
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(data_CA, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(data_CA), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+```
+
+Eliminamos, ordenamos y renombramos, ciertas columnas con Excel
+Volvemos a extraer el csv con el nombre de 'Copa_America.csv'
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+data_CA <- read_csv("C:/Users/John/OneDrive/Documentos/UNMSM/25-0/PLE/PROYECTO/Copa_America.csv",locale = locale(encoding = "UTF-8"))
+```
+
+# DataFrame final con el que trabajaremos
+```{r,  warning=FALSE, cache=FALSE, message=FALSE}
+datatable(data_CA, options = list(scrollX = TRUE)) %>% 
+  formatStyle(
+    columns = names(data_CA), 
+    fontFamily = "Courier New",  
+    fontSize = "14px"
+  )
+```
